@@ -33,7 +33,7 @@ of a date passing.
 | Trigger | Decision | Approver |
 | --- | --- | --- |
 | A release line falls outside the supported window | Automatic, following the [Security Policy](../SECURITY_POLICY.md#supported-versions) | [Release Manager](../roles/RELEASE_MANAGER.md) confirms |
-| A feature's purpose is gone, or its maintenance cost exceeds its use | Proposed in an issue with usage evidence | Maintainers, by [lazy consensus](processes/LAZY_CONSENSUS.md) |
+| A feature's purpose is gone, or its maintenance cost exceeds its use | Proposed in an issue with usage evidence | Maintainers, by [lazy consensus](../processes/LAZY_CONSENSUS.md) |
 | A dependency, OS, or platform can no longer be supported safely | Proposed in an issue citing the constraint | Maintainers, with the [Security Officer](../roles/SECURITY_OFFICER.md) |
 | The project itself winds down | Proposed as a formal proposal | [Supermajority](SUPERMAJORITY.md), per the [Decision Rights Matrix](../matrices/DECISION_RIGHTS_MATRIX.md) |
 
