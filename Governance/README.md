@@ -26,6 +26,9 @@ establishes the project's purpose, authority, and amendment process. See
 The governance documents are organised into the following areas. Individual
 documents are added and refined over time (tracked as issues):
 
+- **Templates** — contributor and maintainer starting points, including the
+  [`templates/BUG_REPORT_TEMPLATE.md`](templates/BUG_REPORT_TEMPLATE.md) for
+  reporting app defects.
 - **Foundations** — charter, mission, values, principles, and glossary.
 - **Roles & membership** — contributor ladder, maintainer/reviewer roles, and the
   onboarding/offboarding lifecycle. The moderator role — duties, powers and
