@@ -1,75 +1,70 @@
 # Data Access Matrix
 
-This document defines the data classifications used in TeachLink Mobile, the roles that interact with that data, and the allowed access for each role. It is the versioned reference for data access governance and is self-contained within the `Governance/` folder.
+This document defines the data classifications used by TeachLink Mobile, the roles that interact with that data, and the allowed access for each role. It is the versioned reference for data access governance and is self-contained within the `Governance/` folder.
 
 ## Scope
 
-This matrix applies to all data processed, retained, or transmitted by the TeachLink Mobile application and its supporting infrastructure. It covers development, staging, and production environments.
+This matrix applies to data handled by the TeachLink Mobile application, its build and release pipelines, and the supporting operational processes described in this folder. It does not grant access by itself; it defines what access is allowed for each role and must be enforced through tooling, review, and operational procedures.
 
 ## Data Classifications
 
-Data is classified into four tiers. Each tier implies a different level of sensitivity and thus a different default access posture.
+Data is classified into the following categories. Classification determines the minimum controls and the maximum access any role may hold.
 
-| Classification | Description | Examples |
-| --- | --- | --- |
-| **Public** | Data intended for open disclosure. | Marketing content, public course catalog, release notes. |
-| **Internal** | Non-sensitive operational data limited to the team. | Aggregated usage metrics, build logs, feature-flag state. |
-| **Confidential** | Personally identifiable information (PII) and account data. | Name, email, role in course, device identifiers, auth tokens. |
-| **Restricted** | Highly sensitive data whose disclosure carries legal or significant operational risk. | Credentials, payment details, audit trails, security incident records. |
+| Classification | Description | Examples | Handling requirements |
+| --- | --- | --- | --- |
+| **Public** | Information intended for open distribution. | Marketing content, public docs, open-source code. | No special handling. |
+| **Internal** | Non-sensitive operational data restricted to the project team. | Internal roadmaps, build logs without PII, non-production configuration. | Access on a need-to-know basis. |
+| **Confidential** | Sensitive business or technical data whose disclosure could harm the project or its users. | Private keys for signing, secrets, unreported security issues, contract terms. | Encrypted at rest, least privilege, audited access. |
+| **Restricted / PII** | Personally identifiable information and other data subject to privacy obligations. | User names, email addresses, device identifiers, telemetry that can be linked to a person. | Explicit authorization, minimization, retention limits, audit trail. |
+
+Any data that cannot be confidently classified is treated as the highest applicable classification until a decision is recorded.
 
 ## Roles
 
-Roles are defined by the governance model in this repository. For the purpose of this matrix, the relevant roles are:
+Roles are defined consistently with the rest of the governance documents in this folder.
 
 | Role | Description |
 | --- | --- |
-| **Public / Anonymous** | Unauthenticated users of the app. |
-| **Learner** | Authenticated end user accessing their own account and course data. |
-| **Instructor** | Authenticated user who manages courses and learner progress. |
-| **Contributor** | Anyone with merge access to the repository via a pull request. |
-| **Maintainer** | Reviewers with merge and release authority. |
-| **Security Officer** | Responsible for vulnerability handling and incident response. |
-| **System / Service** | Automated services and background jobs operating with scoped credentials. |
+| **Contributor** | Anyone who submits issues or pull requests to the repository. |
+| **Reviewer** | Contributor trusted to review and approve changes in a designated area. |
+| **Maintainer** | Responsible for merging changes, releases, and overall project health. |
+| **Security team** | Handles vulnerability reports, embargoes, and advisories. |
+| **Release manager** | Owns build and release pipelines and signing material. |
+| **Operations / support** | Handles runtime operations and user support requests. |
+| **Moderator** | Applies community and conduct policies (treated as a contributor for data access purposes). |
 
 ## Access Matrix
 
-The table below specifies the allowed access per role for each data classification. Legend:
+Legend: **F = Full** (allowed without additional approval), **R = Read-only**, **W = Write with review** (allowed with review/approval), **N = No access**.
 
-- **Read** — can view the data.
-- **Write** — can create or modify the data.
-- **Delete** — can remove the data.
-- **None** — no access is permitted.
+| Data classification | Contributor | Reviewer | Maintainer | Security team | Release manager | Operations / support | Moderator |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **Public** | F | F | F | F | F | F | F |
+| **Internal** | R | F | F | R | F | R | R |
+| **Confidential** | N | N | W | F | W | N | N |
+| **Restricted / PII** | N | N | W | W | N | R | N |
 
-| Role | Public | Internal | Confidential | Restricted |
-| --- | --- | --- | --- | --- |
-| Public / Anonymous | Read | None | None | None |
-| Learner | Read | None | Read (own records only) | None |
-| Instructor | Read | Read | Read (assigned learners) | None |
-| Contributor | Read | Read (dev/staging) | None | None |
-| Maintainer | Read | Read, Write | Read (dev/staging), Write (dev/staging) | None |
-| Security Officer | Read | Read | Read | Read, Write |
-| System / Service | Read | Read, Write | Read, Write (scoped) | Read (scoped), Write (audit only) |
+### Notes on the matrix
 
-## Enforcement Rules
-
-- Access to **Confidential** and **Restricted** data must be mediated by authentication and authorization checks in the application and backend services.
-- **Restricted** data access must be logged to an audit trail that is itself classified as **Restricted**.
-- System / service accounts use the principle of least privilege and must be scoped to the minimum data needed for their function.
-- No role may read or write data outside its assigned scope, even within a permitted classification.
-- **Confidential** data must not be copied into **Internal** or **Public** systems without anonymization or aggregation.
+- **Full** access is still subject to the handling requirements for the classification.
+- **Write with review** means the change must be approved by a second person holding at least the same access for that classification.
+- **Security team** access to Restricted / PII data is limited to incident response and is subject to the disclosure process in this folder.
+- **Operations / support** access to Restricted / PII data is read-only and must be justified by an open support request.
+- No role has access to data outside the scope defined above; any exception requires a decision record in this folder.
 
 ## Review Cadence
 
-This matrix is reviewed on a schedule and on event:
-
-- **Quarterly review** — the Security Officer and Maintainers confirm the matrix still reflects the app and infrastructure.
-- **Event-driven review** — any change that introduces a new data classification, role, or data flow must update this document in the same pull request.
-- **Annual attestation** — Maintainers attest that access grants in production match this matrix.
-
-Review outcomes are recorded in the pull request or issue that triggered the review.
+- This matrix is reviewed at least **every six months** by the maintainers and security team.
+- An **ad-hoc review** is triggered by any of the following:
+  - a new data classification is introduced;
+  - a new role is added or an existing role's responsibilities change;
+  - a security incident or privacy complaint is resolved;
+  - a relevant regulatory or platform requirement changes.
+- Review outcomes are recorded by updating this document in a pull request that touches only the `Governance/` folder.
+- If no changes are needed, the review is recorded in the relevant issue or pull request history.
 
 ## Change Log
 
 | Date | Change | Author |
 | --- | --- | --- |
-| 2025-01-01 | Initial data access matrix. | Governance }
+| 2025-01-01 | Initial data access matrix for TeachLink Mobile. | Governance }

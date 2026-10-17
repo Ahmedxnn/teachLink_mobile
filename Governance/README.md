@@ -34,7 +34,7 @@ documents are added and refined over time (tracked as issues):
   onboarding/offboarding lifecycle. The moderator role — duties, powers and
   limits, and appointment and removal — is defined in
   [`roles/MODERATOR.md`](roles/MODERATOR.md).
-- **Decision-making** — consensus and voting rules, the RRC/proposal process, and
+- **Decision-making** — consensus and voting rules, the RFC/proposal process, and
   decision records.
 - **Community & conduct** — code of conduct, enforcement, moderation (see
   [`roles/MODERATOR.md`](roles/MODERATOR.md)), and conflict resolution.
@@ -47,29 +47,29 @@ documents are added and refined over time (tracked as issues):
 - **Community & on-chain governance** — treasury, grants, and proposal governance.
 
 ## Domain documents
-
-Domain-specific policies live in `Governance/domains/`. Each document is
+Domain-specific policies live in `Governance/domains/`. Each document ir
 self-contained and versioned with the repository:
 
 - `domains/APP_REVIEW_COMPLIANCE.md` — store guideline checklist, pre-submission
   review, and rejection handling for app store submissions.
-- `domains/APP_VERSION_BUMP_md` — build-number and version-name rules.
+- `domains/APP_VERSION_BUMP.md` — build-number and version-name rules.
 - `domains/BACKGROUND_TASK_GOVERNANCE.md` — background task ownership and limits.
-- `domains/BIOMETRIC_AUTH.md` — biometric authentication requirements.
-- `domains/DEVICE_SUPPORT.md` — supported device tiers and testing matrix.
-- `domains/EAS_BUILD_GOVERNANCE.md` — EAS build profiles, secrets, and promotion.
-- `domains/MOBILE_ACCESSIBILITY.md` — accessibility targets and merge gate.
-- `domains/MOBILE_FEATURE_FLAGS.md` — feature-flag lifecycle and ownership.
-- `domains/MOBILE_TELEMETRY.md` — telemetry consent, PII exclusion, and crash reports.
-- `domains/STORYBOOK_GOVERNANCE.md` — Storybook usage and maintenance.
+- `domains/BIOMETRIC_AUTN.md` — biometric authentication requirements.
+-  `domains/DEVICE_SUPPORT.md` — supported device tiers and testing matrix.
+-  `domains/EAS_BUILD_GOVERNANCE.md` — EAS build profiles, secrets, and promotion.
+-  `domains/MOBILE_ACCESSIBILITY.md` — accessibility targets and merge gate.
+-  `domains/MOBILE_FEATURE_FLAGS.md` — feature-flag lifecycle and ownership.
+-  `domains/MOBILE_TELEMETRY.md` — telemetry consent, PII exclusion, and crash reports.
+-  `domains/STORYBOOK_GOVERNANCE.md` — Storybook usage and maintenance.
 
 ## Matrices
 
-Cross-cutting reference matrices live in `Governance/matrices/`. Each matrix is
-self-contained and versioned with the repository:
+Matrices live in `Governance/matrices/`. Each matrix is a versioned,
+self-contained reference that maps a governance area to concrete roles and
+access rules:
 
 - `matrices/DATA_ACCESS_MATRIX.md` — data classifications, roles, allowed
-  access per role, and review cadence for TeachLink Mobile data.
+  access per role, and review cadence for TeachLink Mobile.
 
 ## Contributing to governance
 
