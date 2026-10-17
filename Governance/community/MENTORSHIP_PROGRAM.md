@@ -29,7 +29,7 @@ Mentoring is voluntary and never a condition of holding a role.
 | Opt-in | A maintainer chooses to mentor. Nobody is assigned because they are a maintainer |
 | Stated capacity | A mentor states how many mentees they can take and for how long, so that availability is real rather than assumed |
 | Area of expertise | Stated in terms of the areas they can actually help with: user interface, native platform, testing, documentation, accessibility, data protection, release engineering |
-| Training | A mentor reads this policy and the project's expectations for review, per the [Code Review Policy](REVIEW_POLICY.md), before taking a mentee |
+| Training | A mentor reads this policy and the project's expectations for review, per the [Code Review Policy](../policies/REVIEW_POLICY.md), before taking a mentee |
 
 A mentor who cannot meet the time commitment says so and stops rather than letting a
 mentee wait. Handing a mentorship on is expected and is not a failure.
@@ -64,7 +64,7 @@ Matches are made on the mentee's needs rather than on availability.
   conversation during the initial cycle.
 - A first review of their opening pull requests with more explanation than the standard
   review a maintainer would give, per the
-  [Code Review Policy](REVIEW_POLICY.md).
+  [Code Review Policy](../policies/REVIEW_POLICY.md).
 - An introduction to the people and channels relevant to their work.
 - An honest answer about whether their work is good, including when it is not. A mentor
   who only encourages is not mentoring.
@@ -109,7 +109,7 @@ visible later:
 3. Does the match still make sense?
 
 Where the answer to the second question is "something else", the mentoring is not the
-right fix and is redirected: to the [Support Policy](SUPPORT.md), the
+right fix and is redirected: to the [Support Policy](../policies/SUPPORT.md), the
 [Contributor Onboarding Process](../processes/ONBOARDING.md), or the
 [Escalation Path](../processes/ESCALATION_PATH.md).
 

@@ -86,7 +86,7 @@ a good place to start.
    [Changelog Policy](../policies/CHANGELOG_POLICY.md) for how changes are described.
 4. **Sign off your commits.** `git commit -s`, as the
    [Contributor and Release Sign-off Policy](../policies/CONTRIBUTOR_SIGNOFF.md)
-   requires, and confirm the [DCO](DCO.md) statement.
+   requires, and confirm the [DCO](../policies/DCO.md) statement.
 5. **Open a pull request** that says what problem it solves and how you verified it. A
    reviewer should not have to ask what the change is for.
 6. **Close the issue** by referencing it, using `Closes #N` in the pull request body.
