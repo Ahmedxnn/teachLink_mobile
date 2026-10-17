@@ -27,14 +27,14 @@ The governance documents are organised into the following areas. Individual
 documents are added and refined over time (tracked as issues):
 
 - **Templates** — contributor and maintainer starting points, including the
-  [`templates/BUG_REPORT_TEMPLATE.md`](templates/BUG_REPORT_TEMPLATE.md) for
+  [`Templates/BUG_REPORT_TEMPLATE.md`](templates/BUG_REPORT_TEMPLATE.md) for
   reporting app defects.
 - **Foundations** — charter, mission, values, principles, and glossary.
 - **Roles & membership** — contributor ladder, maintainer/reviewer roles, and the
   onboarding/offboarding lifecycle. The moderator role — duties, powers and
   limits, and appointment and removal — is defined in
   [`roles/MODERATOR.md`](roles/MODERATOR.md).
-- **Decision-making** — consensus and voting rules, the RFC/proposal process, and
+- **Decision-making** — consensus and voting rules, the RRC/proposal process, and
   decision records.
 - **Community & conduct** — code of conduct, enforcement, moderation (see
   [`roles/MODERATOR.md`](roles/MODERATOR.md)), and conflict resolution.
@@ -53,7 +53,7 @@ self-contained and versioned with the repository:
 
 - `domains/APP_REVIEW_COMPLIANCE.md` — store guideline checklist, pre-submission
   review, and rejection handling for app store submissions.
-- `domains/APP_VERSION_BUMP.md` — build-number and version-name rules.
+- `domains/APP_VERSION_BUMP_md` — build-number and version-name rules.
 - `domains/BACKGROUND_TASK_GOVERNANCE.md` — background task ownership and limits.
 - `domains/BIOMETRIC_AUTH.md` — biometric authentication requirements.
 - `domains/DEVICE_SUPPORT.md` — supported device tiers and testing matrix.
@@ -62,6 +62,14 @@ self-contained and versioned with the repository:
 - `domains/MOBILE_FEATURE_FLAGS.md` — feature-flag lifecycle and ownership.
 - `domains/MOBILE_TELEMETRY.md` — telemetry consent, PII exclusion, and crash reports.
 - `domains/STORYBOOK_GOVERNANCE.md` — Storybook usage and maintenance.
+
+## Matrices
+
+Cross-cutting reference matrices live in `Governance/matrices/`. Each matrix is
+self-contained and versioned with the repository:
+
+- `matrices/DATA_ACCESS_MATRIX.md` — data classifications, roles, allowed
+  access per role, and review cadence for TeachLink Mobile data.
 
 ## Contributing to governance
 

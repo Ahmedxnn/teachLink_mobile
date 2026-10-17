@@ -1,74 +1,75 @@
-# Data Access Matrix -- TeachLink Mobile
+# Data Access Matrix
 
-## Purpose
+This document defines the data classifications used in TeachLink Mobile, the roles that interact with that data, and the allowed access for each role. It is the versioned reference for data access governance and is self-contained within the `Governance/` folder.
 
-This document is the versioned, authoritative reference for who may access which classes of data within TeachLink Mobile. It closes the governance gap identified in the issue tracker and is scoped to the `Governance/` folder.
+## Scope
 
-This matrix applies to all data stored, processed, or transmitted by the TeachLink Mobile application, including on-device storage, backend services, and any third-party integrations.
+This matrix applies to all data processed, retained, or transmitted by the TeachLink Mobile application and its supporting infrastructure. It covers development, staging, and production environments.
 
 ## Data Classifications
 
-Data is classified into four levels. Classification determines the minimum controls required for access.
+Data is classified into four tiers. Each tier implies a different level of sensitivity and thus a different default access posture.
 
-| Classification | ID | Description | Examples |
-| --- | --- | --- | --- |
-| Public | `P-0` | Data intended for open distribution; no confidentiality impact if disclosed. | Course catalog, marketing content, public profiles |
-| Internal | `I-1` | Operational data restricted to the organization; minor impact if disclosed. | Aggregated usage metrics, content drafts, internal notes |
-| Confidential | `C-2` | Personally identifiable information (PII) and business-sensitive data; moderate to significant impact if disclosed. | Names, email addresses, enrollment records, grades, payment metadata |
-| Restricted | `R-3` | Highly sensitive data requiring strict need-to-know access; severe impact if disclosed or misused. | Authentication secrets, payment credentials, guardian-student messages, special-category data |
+| Classification | Description | Examples |
+| --- | --- | --- |
+| **Public** | Data intended for open disclosure. | Marketing content, public course catalog, release notes. |
+| **Internal** | Non-sensitive operational data limited to the team. | Aggregated usage metrics, build logs, feature-flag state. |
+| **Confidential** | Personally identifiable information (PII) and account data. | Name, email, role in course, device identifiers, auth tokens. |
+| **Restricted** | Highly sensitive data whose disclosure carries legal or significant operational risk. | Credentials, payment details, audit trails, security incident records. |
 
 ## Roles
 
-Access is granted to roles, not individuals, and follows the principle of least privilege.
+Roles are defined by the governance model in this repository. For the purpose of this matrix, the relevant roles are:
 
-| Role | ID | Description |
-| --- | --- | --- |
-| Student | `ROLE STUDENT` | End user enrolled in courses; accesses their own records and publicly available content. |
-| Guardian | `ROLE PUARDAIN` | Parent or legal guardian of a student; accesses the linked student's records. |
-| Teacher | `ROLE TEACHER` | Educator responsible for courses and assessments. |
-| Administrator | `ROLE ADMIN` | Operational staff managing enrollments, support, and configuration. |
-| Support Engineer | `ROLE SUPPORT` | Engineering staff providing break-fix support under break-glass procedures. |
-| Service Account | `ROLE SERVICE` | Automated systems and background jobs operating with scoped credentials. |
+| Role | Description |
+| --- | --- |
+| **Public / Anonymous** | Unauthenticated users of the app. |
+| **Learner** | Authenticated end user accessing their own account and course data. |
+| **Instructor** | Authenticated user who manages courses and learner progress. |
+| **Contributor** | Anyone with merge access to the repository via a pull request. |
+| **Maintainer** | Reviewers with merge and release authority. |
+| **Security Officer** | Responsible for vulnerability handling and incident response. |
+| **System / Service** | Automated services and background jobs operating with scoped credentials. |
 
 ## Access Matrix
 
-Legend: `:white_check_mark:` = full access; `:large_blue_circle:` = access limited to own or linked records; `:x:` = no access.
+The table below specifies the allowed access per role for each data classification. Legend:
 
-| Data Classification | Student | Guardian | Teacher | Administrator | Support Engineer | Service Account |
-| --- | --- | --- | --- | --- | --- | --- |
-| Public (`P-0`) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| Internal (`I-1`) | :x: internal metrics only | :x: | :large_blue_circle: course-scoped | :white_check_mark: | :large_blue_circle: break-glass only | :large_blue_circle: job-scoped |
-| Confidential (`C-2`) | :large_blue_circle: own records | :large_blue_circle: linked student | :large_blue_circle: assigned courses | :white_check_mark: | :large_blue_circle: break-glass only | :large_blue_circle: job-scoped |
-| Restricted (`R-3`) | :x: | :x: | :x: | :large_blue_circle: audited need-to-know | :x: | :large_blue_circle: job-scoped, audited |
+- **Read** — can view the data.
+- **Write** — can create or modify the data.
+- **Delete** — can remove the data.
+- **None** — no access is permitted.
 
-## Access Conditions
+| Role | Public | Internal | Confidential | Restricted |
+| --- | --- | --- | --- | --- |
+| Public / Anonymous | Read | None | None | None |
+| Learner | Read | None | Read (own records only) | None |
+| Instructor | Read | Read | Read (assigned learners) | None |
+| Contributor | Read | Read (dev/staging) | None | None |
+| Maintainer | Read | Read, Write | Read (dev/staging), Write (dev/staging) | None |
+| Security Officer | Read | Read | Read | Read, Write |
+| System / Service | Read | Read, Write | Read, Write (scoped) | Read (scoped), Write (audit only) |
 
-- All access to Confidential and Restricted data MUST be authenticated and authorized server-side; client-side checks are not sufficient.
-- Guardian access requires a verified guardian-student link and MUST be limited to the linked student's records.
-- Support Engineer access MUST occur under a time-bounded, audited break-glass procedure with explicit approval.
-- Service Account access MUST be scoped to the minimum permissions required by the job and rotated on a schedule.
-- Access to Restricted data MUST be logged with actor, timestamp, resource, and justification.
-- Data MUST be transmitted over TLS 1.2+ and encrypted at rest using the project-approved encryption standard.
+## Enforcement Rules
+
+- Access to **Confidential** and **Restricted** data must be mediated by authentication and authorization checks in the application and backend services.
+- **Restricted** data access must be logged to an audit trail that is itself classified as **Restricted**.
+- System / service accounts use the principle of least privilege and must be scoped to the minimum data needed for their function.
+- No role may read or write data outside its assigned scope, even within a permitted classification.
+- **Confidential** data must not be copied into **Internal** or **Public** systems without anonymization or aggregation.
 
 ## Review Cadence
 
-| Review Activity | Cadence | Owner |
+This matrix is reviewed on a schedule and on event:
+
+- **Quarterly review** — the Security Officer and Maintainers confirm the matrix still reflects the app and infrastructure.
+- **Event-driven review** — any change that introduces a new data classification, role, or data flow must update this document in the same pull request.
+- **Annual attestation** — Maintainers attest that access grants in production match this matrix.
+
+Review outcomes are recorded in the pull request or issue that triggered the review.
+
+## Change Log
+
+| Date | Change | Author |
 | --- | --- | --- |
-| Full matrix review and re-approval | Annually, and on any material change to data classifications or roles | Governance lead |
-| Access grants for Confidential and Restricted data | Quarterly re-certification | Security lead |
-| Break-glass access logs | Monthly review | Security lead |
-| Service Account credential rotation and scope audit | Quarterly | Platform lead |
-
-Reviews MUST be recorded in the governance changelog with the reviewer, date, and any approved deviations.
-
-## Change Management
-
-- Any change to this matrix MUST be submitted as a pull request scoped to the `Governance/` folder.
-- Changes MUST include a description of the rationale and the affected classifications or roles.
-- Changes MUST be reviewed by the Governance lead and the Security lead before merge.
-
-## Version History
-
-| Version | Date | Description |
-| --- | --- | --- |
-| 1.0.0 | 2024-01-01 | Initial data access matrix for TeachLink Mobile. }
+| 2025-01-01 | Initial data access matrix. | Governance }
