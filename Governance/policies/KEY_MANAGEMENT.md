@@ -103,7 +103,7 @@ Order of operations matters. Revoke or retire the old key at the source **before
 returning to service, then verify the new key works. For signing material the
 superseded key is retained in the secure store only until the store accepts a build
 signed with the new key, which is the rollback position described in the
-[App Signing Key Policy](../domains/APP_SIGNING_KEYS.md#verification-and-rollback).
+[App Signing Key Policy](../domains/APP_SIGNING_KEYS.md#rotation-process).
 
 Previously signed artefacts stay valid. History is not rewritten to re-sign commits or
 re-issue builds that users already have; the affected window is reviewed instead.
