@@ -28,7 +28,9 @@ documents are added and refined over time (tracked as issues):
 
 - **Templates** — contributor and maintainer starting points, including the
   [`Templates/BUG_REPORT_TEMPLATE.md`](templates/BUG_REPORT_TEMPLATE.md) for
-  reporting app defects.
+  reporting app defects and the
+  [`Templates/PR_DESCRIPTION_TEMPLATE.md`](templates/PR_DESCRIPTION_TEMPLATE.md)
+  for pull request descriptions.
 - **Foundations** — charter, mission, values, principles, and glossary.
 - **Roles & membership** — contributor ladder, maintainer/reviewer roles, and the
   onboarding/offboarding lifecycle. The moderator role — duties, powers and
